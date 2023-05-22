@@ -1,13 +1,15 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"os"
 	"runtime"
 	"strconv"
 	"time"
 
 	"github.com/getlantern/systray"
-	"github.com/getlantern/systray/example/icon"
 	"github.com/shirou/gopsutil/net"
 )
 
@@ -16,8 +18,25 @@ func main() {
 }
 
 func onReady() {
-
-	systray.SetIcon(icon.Data)
+	icoFile, err := os.Open("./icon.ico")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer icoFile.Close()
+	stat, err := icoFile.Stat()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	bs := make([]byte, stat.Size())
+	_, err = bufio.NewReader(icoFile).Read(bs)
+	if err != nil && err != io.EOF {
+		fmt.Println(err)
+		return
+	}
+	systray.SetIcon(bs)
+	//systray.SetIcon(icon.Data)
 	systray.SetTitle("Awesome App")
 
 	downloadSpeed := make(chan string)
