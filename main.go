@@ -9,12 +9,13 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Gessar/network_tray_golang/tray_net"
 	"github.com/getlantern/systray"
 	"github.com/shirou/gopsutil/net"
 )
 
 func main() {
-	systray.Run(onReady, onExit)
+	systray.Run(onReady, tray_net.OnExit)
 }
 
 func onReady() {
@@ -91,10 +92,6 @@ func onReady() {
 		}
 	}()
 
-}
-
-func onExit() {
-	fmt.Println("\nExiting...")
 }
 
 func formatSpeedText(currentBytesSent uint64, lastBytesSent uint64, currentBytesRecv uint64, lastBytesRecv uint64) string {
