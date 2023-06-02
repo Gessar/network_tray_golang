@@ -11,10 +11,25 @@ import (
 
 	"github.com/Gessar/network_tray_golang/tray_net"
 	"github.com/getlantern/systray"
+	"github.com/gookit/ini/v2"
 	"github.com/shirou/gopsutil/net"
 )
 
 func main() {
+	err := ini.LoadExists("testdata/test.ini", "not-exist.ini")
+	if err != nil {
+		panic(err)
+	}
+
+	// load more, will override prev data by key
+	err = ini.LoadStrings(`
+age = 100
+[sec1]
+newK = newVal
+some = change val
+`)
+	age := ini.Int("age")
+	fmt.Print(age) // 100
 	systray.Run(onReady, tray_net.OnExit)
 }
 
