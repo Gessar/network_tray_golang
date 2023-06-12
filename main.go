@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	speednet "github.com/Gessar/network_tray_golang/speed_net"
 	"github.com/Gessar/network_tray_golang/tray_net"
 	"github.com/getlantern/systray"
 	"github.com/gookit/ini/v2"
@@ -115,9 +116,10 @@ func onReady() {
 			currentBytesRecv = 0
 
 			time.Sleep(time.Second)
+			speednet.SetSpeed()
+			fmt.Println(speednet.GetSpeed())
 		}
 	}()
-
 }
 
 func formatSpeedText(currentBytesSent uint64, lastBytesSent uint64, currentBytesRecv uint64, lastBytesRecv uint64, base string) string {
