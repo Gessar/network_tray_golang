@@ -98,7 +98,9 @@ func onReady() {
 
 			for _, counter := range ioCounters {
 				currentBytesSent += counter.BytesSent
+				//fmt.Println("in for Sent = ", counter.BytesSent)
 				currentBytesRecv += counter.BytesRecv
+				//fmt.Println("in for Sent = ", counter.BytesRecv)
 			}
 
 			if lastBytesSent != 0 && lastBytesRecv != 0 {
@@ -117,7 +119,7 @@ func onReady() {
 
 			time.Sleep(time.Second)
 			speednet.SetSpeed()
-			fmt.Println(speednet.GetSpeed())
+			//fmt.Println(speednet.GetSpeed())
 		}
 	}()
 }
